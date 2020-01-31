@@ -1,0 +1,59 @@
+<mat-card class="container">
+  <form [formGroup]="form" (ngSubmit)="onSaveForm($event)" novalidate>
+    <mat-form-field>
+      <input matInput placeholder="name" formControlName="name" required>
+      <mat-error *ngIf="name.errors?.required">Name is required</mat-error>
+      <!--<mat-error *ngIf="name.invalid && (name.dirty || name.touched)">Please enter a name</mat-error>-->
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="lastname" formControlName="lastname" required>
+      <mat-error *ngIf="lastname.errors?.required">lastname is required</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="number" matInput placeholder="age" formControlName="age" required>
+      <mat-error *ngIf="age.errors?.required">age is required</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="email" placeholder="email" formControlName="email" required>
+      <mat-error *ngIf="email.errors?.required">Email is required</mat-error>
+    </mat-form-field>
+    <button class="text-left" mat-raised-button color="primary" type="button" (click)="addPhone()">add phone</button>
+    <div class="container-phones" formArrayName="phones">
+      <table *ngIf="phones.length > 0">
+        <thead>
+          <tr>
+            <th>area</th>
+            <th>prefix</th>
+            <th>line</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let phone of phones.controls; let i = index;" [formGroupName]="i">
+            <td>
+              <mat-form-field>
+                <input matInput placeholder="area" formControlName="area">
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field>
+                <input matInput placeholder="prefix" formControlName="prefix">
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field>
+                <input matInput type="number" placeholder="line" formControlName="line">
+              </mat-form-field>
+            </td>
+            <td>
+              <button mat-raised-button color="warn" (click)="deletePhone(i)">delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div>
+      </div>
+    </div>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">submit</button>
+  </form>
+</mat-card>
